@@ -9,17 +9,18 @@ smallest possible size.
 
 Design and test an exhaustive search algorithm to solve one of the following graph problems, as 
 well as another method using a greedy heuristic. 
+
 Afterwards, analyze the computational complexity of the developed algorithms. To accomplish that: 
-a - Perform a formal computational complexity analysis of the developed algorithms. 
-b - Carry out a sequence of experiments, for successively larger problem instances, to register 
+* Perform a formal computational complexity analysis of the developed algorithms. 
+* Carry out a sequence of experiments, for successively larger problem instances, to register 
 and analyze (1) the number of basic operations carried out, (2) the execution time and (3) 
 the number of solutions / configurations tested, as well as (4) the precision of the greedy 
 heuristic used. 
-c - Compare the results of the experimental and the formal analysis. 
-d - Determine the largest graph that you can process on your computer, without taking too much 
+* Compare the results of the experimental and the formal analysis. 
+* Determine the largest graph that you can process on your computer, without taking too much 
 time. 
-e - Estimate the execution time that would be required by much larger problem instances. 
-f - Write a report (8 pages, max.).   
+* Estimate the execution time that would be required by much larger problem instances. 
+* Write a report (8 pages, max.).   
 Graphs for the Computational Experiments 
 The graph instances used in the computational experiments should represent the following 
 scenario: - - - 
