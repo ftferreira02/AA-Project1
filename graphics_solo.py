@@ -9,16 +9,18 @@ PLOT_DIR = "Plots"
 os.makedirs(PLOT_DIR, exist_ok=True)  # Ensure the directory exists
 
 # 1. Comparison of Execution Time for each graph
-def plot_execution_time(df, search):
+def plot_execution_time_log_scale(df, search):
     plt.figure(figsize=(12, 6))
     plt.bar(df["Graph"], df["Time_Taken"], color="skyblue")
     plt.xlabel("Graph")
-    plt.ylabel("Time Taken (seconds)")
-    plt.title("Execution Time for Each Graph")
+    plt.ylabel("Time Taken (seconds, log scale)")
+    plt.title(f"Execution Time for Each Graph ({search})")
+    plt.yscale("log")  # Set y-axis to logarithmic scale
     plt.xticks(rotation=90)
     plt.tight_layout()
-    plt.savefig(os.path.join(PLOT_DIR, f"execution_time_{search}.png"))
-  # Save as PNG
+    plt.savefig(os.path.join(PLOT_DIR, f"execution_time_{search}_log.png"))
+    plt.show()
+
 
 # 2. Basic Operations Count
 def plot_basic_operations(df, search):
@@ -64,7 +66,7 @@ def plot_time_vs_vertices(df, search):
     plt.savefig(os.path.join(PLOT_DIR, f"time_vs_vertices{search}.png"))  # Save as PNG
 
 def generate_graphics_single(df, search):
-    plot_execution_time(df , search)
+    plot_execution_time_log_scale(df , search)
     plot_basic_operations(df, search)
     plot_solution_quality(df, search)
     plot_time_vs_density(df, search)
