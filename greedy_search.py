@@ -11,34 +11,54 @@ GREEDY_EDGE_DOMINATING_IMG_DIR = "Graphs/GreedySearchImages"
 # Ensure the directory exists for saving images
 os.makedirs(GREEDY_EDGE_DOMINATING_IMG_DIR, exist_ok=True)
 
+def sorted_edge(u, v):
+    """Return a tuple with the smaller node first."""
+    return (u, v) if u <= v else (v, u)
+
+def get_sorted_adjacent_edges(G, node):
+    """Return a set of sorted edges adjacent to a node."""
+    return set(sorted_edge(node, neighbor) for neighbor in G.neighbors(node))
+
 def greedy_edge_dominating_set(G):
-    """Find an edge dominating set using a greedy algorithm."""
+    """Find an edge dominating set using a greedy algorithm with consistent edge representation."""
     covered_edges = set()
     dominating_set = set()
     operation_count = 0
     
     start_time = time.time()
     
-    while len(covered_edges) < len(G.edges()):
+    # Ensure all edges are represented as sorted tuples
+    all_edges = set(sorted_edge(u, v) for u, v in G.edges())
+    
+    while len(covered_edges) < len(all_edges):
         best_edge = None
         max_coverage = 0
         
-        for edge in G.edges():
+        edges_to_consider = all_edges - covered_edges
+        
+        for edge in edges_to_consider:
             operation_count += 1
             u, v = edge
-            coverage = len(set(G.edges(u)).union(G.edges(v)) - covered_edges)
+            adjacent_edges = get_sorted_adjacent_edges(G, u).union(get_sorted_adjacent_edges(G, v))
+            # Include the edge itself
+            adjacent_edges.add(edge)
+            new_coverage = adjacent_edges - covered_edges
+            coverage = len(new_coverage)
             
             if coverage > max_coverage:
                 max_coverage = coverage
                 best_edge = edge
-
+                best_new_coverage = new_coverage
+        
         if best_edge:
             dominating_set.add(best_edge)
-            covered_edges.update(G.edges(best_edge[0]))
-            covered_edges.update(G.edges(best_edge[1]))
-
+            covered_edges.update(best_new_coverage)
+        else:
+            break  # No more edges to cover
+    
     duration = time.time() - start_time
     return dominating_set, operation_count, duration
+
 
 def main():
     # Clear the results file at the start
