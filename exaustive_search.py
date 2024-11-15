@@ -5,7 +5,7 @@ import multiprocessing
 from itertools import combinations
 from graph_utils import parse_graph_from_text, write_result_to_file, visualize_and_save_edge_dominating_set
 
-TIMEOUT = 120  # Timeout in seconds (2 minutes)
+TIMEOUT = 240  # Timeout in seconds (2 minutes)
 GRAPH_TEXT_FILE = "Graphs/all_graphs_data.txt"
 RESULT_TEXT_FILE = "Graphs/min_edge_dominating_sets.txt"
 MIN_EDGE_DOMINATING_IMG_DIR = "Graphs/ExaustiveSearchImages"
@@ -41,16 +41,16 @@ def minimum_edge_dominating_set_with_timeout(G, timeout=TIMEOUT):
     
     start_time = time.time()
     process.start()
-    process.join(timeout)
+    process.join()
     
-    if process.is_alive():
-        process.terminate()
-        process.join()
-        return None, 0, time.time() - start_time, True
-    else:
-        min_set, operation_count = result_queue.get()
-        duration = time.time() - start_time
-        return min_set, operation_count, duration, False
+    # if process.is_alive():
+    #     process.terminate()
+    #     process.join()
+    #     return None, 0, time.time() - start_time, True
+    # else:
+    min_set, operation_count = result_queue.get()
+    duration = time.time() - start_time
+    return min_set, operation_count, duration, False
 
 def minimum_edge_dominating_set_process(G, result_queue):
     all_edges = set(sorted_edge(u, v) for u, v in G.edges())

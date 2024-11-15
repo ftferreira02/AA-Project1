@@ -108,9 +108,9 @@ def main():
     
     if choice == '1':
         densities = [0.125, 0.25, 0.5, 0.75]
-        max_vertices = 15
+        max_vertices = 18
 
-        for num_vertices in range(4, max_vertices + 1):
+        for num_vertices in range(10, max_vertices + 1):
             for density in densities:
                 G = create_graph_with_density(num_vertices, density)
                 
